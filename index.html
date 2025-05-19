@@ -1,0 +1,1890 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">        <meta name="description" content="Barista Cafe - Premium Coffee Experience in Poznań. Enjoy our ethically sourced coffee, pastries, and warm atmosphere.">
+        <meta name="author" content="Barista Cafe">
+        <meta name="keywords" content="coffee, cafe, barista, Poznań, premium coffee, ethical beans, pastries">
+
+        <title>Barista Cafe - Premium Coffee Experience in Poznań</title>
+
+        <!-- CSS FILES -->                
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200;0,400;0,600;0,700;1,200;1,700&display=swap" rel="stylesheet">
+            
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+        <link href="css/bootstrap-icons.css" rel="stylesheet">        <link href="css/vegas.min.css" rel="stylesheet">        
+        <link href="css/tooplate-barista.css" rel="stylesheet">
+        <link href="css/scrollbar-fix.css" rel="stylesheet">
+        <link href="css/responsive-fixes.css" rel="stylesheet">
+        <link href="css/footer-fix.css" rel="stylesheet">
+        
+<!--
+
+Tooplate 2137 Barista Cafe
+
+https://www.tooplate.com/view/2137-barista-cafe
+
+Bootstrap 5 HTML CSS Template
+
+-->
+        <!-- Game CSS -->
+        <style>
+        .game-container {
+            width: 80%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            color: #ffffff;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+        
+        #coffee-game {
+            width: 100%;
+            height: 400px;
+            background-color: #9c7953; /* Coffee-themed background */
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background-size: 40px;
+            opacity: 1;
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
+        }
+        
+        .coffee-bean {
+            width: 30px;
+            height: 30px;
+            background-image: url('images/coffee-beans.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            position: absolute;
+            cursor: pointer;
+        }
+        
+        .special-bean {
+            width: 35px;
+            height: 35px;
+            background-color: gold;
+            border-radius: 50%;
+            position: absolute;
+            cursor: pointer;
+            animation: pulse 1s infinite;
+            background-image: url('images/coffee-beans.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            filter: brightness(1.5) sepia(1) hue-rotate(5deg);
+        }
+        
+        .cup {
+            width: 80px;
+            height: 80px;
+            background-image: url('images/cup.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        #score-display {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        
+        .reward-display {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #70461e;
+            border-radius: 8px;
+            display: none;
+            position: relative;
+            z-index: 95;
+            color: #ffffff;
+        }
+        
+        .promo-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ff5722;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .level-indicator {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(0,0,0,0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .progress-bar-container {
+            width: 100%;
+            height: 15px;
+            background-color: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: #27ae60;
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        .achievements {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        
+        .achievement {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            position: relative;
+        }
+        
+        .achievement.unlocked {
+            background-color: gold;
+            color: #333;
+        }
+        
+        .achievement-tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0,0,0,0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            white-space: nowrap;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        
+        .achievement:hover .achievement-tooltip {
+            visibility: visible;
+            opacity: 1;
+        }        .product-ad {
+            background-color: rgba(255, 255, 255, 0.95);
+            background-image: linear-gradient(to bottom, #ffffff, #f8f0e5);
+            border: 2px solid #70461e;
+            border-radius: 8px;
+            padding: 15px;
+            width: 220px;
+            color: #333;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+            animation: fadeInOutCorner 8s forwards;
+            margin-bottom: 15px;
+            font-size: 0.9rem;            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            transition: transform 0.3s ease;
+        }
+        
+        .product-ad:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            border-color: #BC6C25;
+        }
+        
+        .product-ad strong {
+            font-size: 1.1rem;
+            color: #502f0e;
+        }
+        
+        .product-ad div {
+            margin: 5px 0;
+            font-weight: bold;
+        }
+        
+        .product-ad small {
+            font-size: 0.8rem;
+            color: #444;
+        }
+        
+        #external-product-ads {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .menu-item-image img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        
+        @keyframes fadeInOutExternal {
+            0% { opacity: 0; transform: translateY(20px) scale(0.95); }
+            10% { opacity: 1; transform: translateY(0) scale(1); }
+            80% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-20px) scale(0.95); }
+        }
+        
+        @keyframes fadeInOutCorner {
+            0% { opacity: 0; transform: translateX(100px) scale(0.95); }
+            10% { opacity: 1; transform: translateX(0) scale(1); }
+            80% { opacity: 1; transform: translateX(0) scale(1); }
+            100% { opacity: 0; transform: translateX(100px) scale(0.95); }
+        }
+        
+        .achievement-notification {
+            position: fixed !important;
+            top: 120px !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            background-color: rgba(0, 0, 0, 0.8) !important;
+            color: white !important;
+            padding: 15px 25px !important;
+            border-radius: 5px !important;
+            z-index: 99 !important;
+            text-align: center !important;
+            border: 2px solid gold !important;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5) !important;
+            animation: fadeIn 0.5s, fadeOut 0.5s 2.5s !important;
+            pointer-events: none !important;
+        }
+        
+        .coupon {
+            background-color: white !important;
+            border: 3px dashed gold !important;
+            padding: 15px !important;
+            margin-top: 15px !important;
+            margin-bottom: 15px !important;
+            border-radius: 10px !important;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5) !important;
+        }
+        
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: scale(0.8); }
+            10% { opacity: 1; transform: scale(1); }
+            80% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0.8); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        /* FAQ Section Styles */
+        .faq-section {
+            padding: 80px 0;
+        }
+        .accordion-item {
+            border: none;
+            margin-bottom: 15px;
+            border-radius: 8px !important;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .accordion-button {
+            font-weight: 600;
+            padding: 20px;
+        }
+        .accordion-button:not(.collapsed) {
+            background-color: #70461e;
+            color: white;
+        }
+        .accordion-button:focus {
+            box-shadow: none;
+        }
+        .accordion-body {
+            padding: 20px;
+            color: #333;
+        }
+        .chat-bot {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .chat-messages {
+            height: 300px;
+            overflow-y: auto;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .bot-message, .user-message {
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            max-width: 80%;
+            position: relative;
+        }
+        .bot-message {
+            background-color: #e6e6e6;
+            float: left;
+            clear: both;
+        }
+        .user-message {
+            background-color: #70461e;
+            color: white;
+            float: right;
+            clear: both;
+        }
+        .chat-input {
+            display: flex;
+            gap: 10px;
+        }
+        .chat-input input {
+            flex-grow: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+        }
+        .chat-input button {
+            background-color: #70461e;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        /* Ad-related styles */
+        .watermark {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            opacity: 0.7;
+            z-index: 100;
+            pointer-events: none;
+        }
+        
+        .watermark img {
+            max-width: 100px;
+            height: auto;
+        }
+        
+        .toplayer-ad {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+            display: none;
+            max-width: 90%;
+            width: 500px;
+            text-align: center;
+        }
+        
+        .toplayer-ad .close-btn {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #502f0e;
+        }
+        
+        .newsletter-popup {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 300px;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            display: none;
+        }
+          .newsletter-popup h4 {
+            color: #502f0e;
+            margin-top: 0;
+            padding-right: 30px; /* Add padding to prevent overlap with close button */
+        }
+        
+        .newsletter-popup input {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        .newsletter-popup button {
+            background-color: #70461e;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }        .newsletter-popup .close-btn {
+            position: absolute;
+            right: 10px;
+            top: 5px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid #ccc;
+            z-index: 10;
+            width: 25px;
+            height: 25px;
+            line-height: 20px;
+            text-align: center;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            color: #502f0e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+        
+        #banner-container, #billboard-container {
+            width: 100%;
+            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .ad-label {
+            font-size: 10px;
+            text-align: center;
+            color: #999;
+            text-transform: uppercase;
+        }
+        
+        .side-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        #skyscraper-container {
+            height: 600px;
+        }
+        
+        .button-ad-row {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 20px 0;
+            gap: 10px;
+        }
+          /* Media & Press Section Styles */
+        .press-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        .press-date {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .download-btn {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: #70461e;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .download-btn:hover {
+            background-color: #8b5a2b;
+            color: white;
+        }
+        .media-contact {
+            background-color: rgba(112, 70, 30, 0.1);
+            border-left: 4px solid #70461e;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        /* Investor Relations Section Styles */
+        .investor-section {
+            background-color: #f9f9f9;
+        }
+        .investor-section h3 {
+            color: #502f0e;
+        }
+        .investor-section ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin-top: 15px;
+        }
+        .investor-section ul li {
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .investor-section .press-card ul li {
+            padding: 8px 0;
+        }
+        </style>
+    </head>
+    
+    <body>
+        <!-- Watermark Ad -->
+        <div class="watermark">
+            <img src="images/coffee-beans.png" alt="Barista Cafe">
+        </div>
+                
+            <main>
+                <nav class="navbar navbar-expand-lg">                
+                    <div class="container">
+                        <a class="navbar-brand d-flex align-items-center" href="index.html">
+                            <img src="images/coffee-beans.png" class="navbar-brand-image img-fluid" alt="Barista Cafe Template">
+                            Barista
+                        </a>
+        
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+        
+                        <div class="collapse navbar-collapse" id="navbarNav">                            <ul class="navbar-nav ms-lg-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link click-scroll" href="#section_1">Home</a>
+                                </li>
+        
+                                <li class="nav-item">
+                                    <a class="nav-link click-scroll" href="#section_2">About</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link click-scroll" href="#section_3">Our Menu</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link click-scroll" href="#section_4">Reviews</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link click-scroll" href="#section_5">Contact</a>
+                                </li>                                <li class="nav-item">
+                                    <a class="nav-link click-scroll" href="#section_6">Coffee Game</a>
+                                </li>
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link click-scroll" href="#section_7">FAQ</a>
+                                </li>
+                                  <li class="nav-item">
+                                    <a class="nav-link click-scroll" href="#section_8">Media & Press</a>
+                                </li>
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link click-scroll" href="#section_9">Investor Relations</a>
+                                </li>
+                            </ul>
+
+                            <div class="ms-lg-3">
+                                <a class="btn custom-btn custom-border-btn" href="reservation.html">
+                                    Reservation
+                                    <i class="bi-arrow-up-right ms-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+
+
+                <section class="hero-section d-flex justify-content-center align-items-center" id="section_1">
+
+                    <div class="container">
+                        <div class="row align-items-center">
+
+                            <div class="col-lg-6 col-12 mx-auto">
+                                <em class="small-text">welcome to Barista.pl</em>
+                                
+                                <h1>Cafe Poznań</h1>
+
+                                <p class="text-white mb-4 pb-lg-2">
+                                    your <em>favourite</em> coffee daily lives.
+                                </p>
+
+                                <a class="btn custom-btn custom-border-btn smoothscroll me-3" href="#section_2">
+                                    Our Story
+                                </a>
+
+                                <a class="btn custom-btn smoothscroll me-2 mb-2" href="#section_3"><strong>Check Menu</strong></a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="hero-slides"></div>
+                </section>
+                
+                <!-- Banner Ad Container -->
+                <div id="banner-container">
+                    <div class="ad-label">Advertisement</div>
+                </div>
+                
+                <section class="about-section section-padding" id="section_2">
+                    <div class="section-overlay"></div>
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-lg-12 col-12 text-center mb-5">
+                                <em class="text-white">About Barista Cafe</em>
+                                <h2 class="text-white">Our Company</h2>
+                            </div>
+
+                            <div class="col-lg-6 col-12">
+                                <div class="ratio ratio-1x1">
+                                    <video autoplay="" loop="" muted="" class="custom-video" poster="">
+                                        <source src="videos/pexels-mike-jones-9046237.mp4" type="video/mp4">
+
+                                        Your browser does not support the video tag.
+                                    </video>
+
+                                    <div class="about-video-info d-flex flex-column">
+                                        <h4 class="mt-auto">We Started Since 2009.</h4>
+
+                                        <h4>Best Cafe in Poznań.</h4>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-5 col-12 mt-4 mt-lg-0 mx-auto">
+                                <h3 class="text-white mb-3">Company History</h3>
+                                <p class="text-white">Barista Cafe was founded in 2009 by coffee enthusiast Jan Kowalski and his wife, pastry chef Anna Kowalska. What began as a small coffee cart in Poznań's bustling business district has evolved into a beloved chain with over 15 locations across Poland.</p>
+                                
+                                <p class="text-white">Our journey began with a simple passion: to create the perfect cup of coffee using ethically sourced beans and traditional brewing methods. Over the past decade, we have expanded our offerings while staying true to our original mission of quality, sustainability, and community.</p>
+                                
+                                <p class="text-white">In 2015, we opened our flagship store in downtown Poznań, featuring our first in-house roastery. By 2018, we had expanded to five locations, and in 2020, despite global challenges, we launched our successful premium coffee subscription service.</p>
+
+                                <a href="#barista-team" class="smoothscroll btn custom-btn custom-border-btn mt-3 mb-4" rel="noopener">Meet Baristas</a>
+                            </div>
+
+                        </div>
+                        
+                        <div class="row mt-5">
+                            <div class="col-lg-6 col-12">
+                                <h3 class="text-white mb-4">Company Structure</h3>
+                                <p class="text-white">Barista Cafe operates under a vertically integrated business model, overseeing everything from bean sourcing to customer service:</p>
+                                <ul class="text-white">
+                                    <li>Bean Selection & Processing Division</li>
+                                    <li>Roastery Operations</li>
+                                    <li>Cafe Operations & Management</li>
+                                    <li>Food & Bakery Development</li>
+                                    <li>Training & Education Department</li>
+                                    <li>Marketing & Customer Experience</li>
+                                    <li>Research & Development</li>
+                                </ul>
+                                <p class="text-white">Our headquarters in Poznań houses our main administrative offices, training center, and flagship roastery.</p>
+                            </div>
+
+                            <div class="col-lg-6 col-12 mt-4 mt-lg-0">
+                                <h3 class="text-white mb-4">Awards & Recognition</h3>
+                                <ul class="awards-list text-white">
+                                    <li><strong>2022</strong> - Best Coffee Chain in Poznań, Food Critics Association</li>
+                                    <li><strong>2021</strong> - Sustainability Award, Restaurant Guild of Poland</li>
+                                    <li><strong>2020</strong> - Best Workplace Culture, Hospitality Industry Awards</li>
+                                    <li><strong>2018</strong> - Best New Blend, International Coffee Competition</li>
+                                    <li><strong>2017</strong> - Entrepreneur of the Year, Jan Kowalski, Business Today</li>
+                                    <li><strong>2015</strong> - Best Customer Experience, Retail Excellence Awards</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-5">
+                            <div class="col-lg-6 col-12">
+                                <h3 class="text-white mb-4">Business Partners & Suppliers</h3>
+                                <p class="text-white">We're proud to work with these exceptional partners:</p>
+                                <ul class="text-white">
+                                    <li>Green Bean Cooperative (Ethiopia) - Coffee Bean Supplier</li>
+                                    <li>Highland Farms (Colombia) - Direct Trade Coffee Partner</li>
+                                    <li>Farm Fresh Dairy - Milk & Dairy Products</li>
+                                    <li>Organic Mills - Bakery Ingredients</li>
+                                    <li>EcoPackage - Sustainable Packaging Solutions</li>
+                                    <li>Poznań Food Market - Local Produce</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="col-lg-6 col-12 mt-4 mt-lg-0">
+                                <h3 class="text-white mb-4">Sustainability Commitment</h3>
+                                <p class="text-white">Our commitment to sustainability isn't just good for the planet—it's good for business. Our key initiatives include:</p>
+                                <ul class="text-white">
+                                    <li>100% ethically sourced coffee beans</li>
+                                    <li>75% reduction in single-use plastics since 2019</li>
+                                    <li>Solar power implementation at 60% of locations</li>
+                                    <li>Coffee ground recycling program</li>
+                                    <li>Carbon offset program for all shipping</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <section class="barista-section section-padding section-bg" id="barista-team">
+                    <div class="container">
+                        <div class="row justify-content-center">
+
+                            <div class="col-lg-12 col-12 text-center mb-4 pb-lg-2">
+                                <em class="text-white">Creative Baristas</em>
+
+                                <h2 class="text-white">Meet People</h2>
+                            </div>
+
+                            <div class="col-lg-3 col-md-6 col-12 mb-4">
+                                <div class="team-block-wrap">
+                                    <div class="team-block-info d-flex flex-column">
+                                        <div class="d-flex mt-auto mb-3">
+                                            <h4 class="text-white mb-0">Jan</h4>
+
+                                            <p class="badge ms-4"><em>Boss</em></p>
+                                        </div>                                        <p class="text-white mb-0">Founder with 25+ years in the coffee industry and a passion for quality beans.</p>
+                                    </div>
+
+                                    <div class="team-block-image-wrap">
+                                        <img src="images/team/portrait-elegant-old-man-wearing-suit.jpg" class="team-block-image img-fluid" alt="">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-6 col-12 mb-4">
+                                <div class="team-block-wrap">
+                                    <div class="team-block-info d-flex flex-column">
+                                        <div class="d-flex mt-auto mb-3">
+                                            <h4 class="text-white mb-0">Katarzyna</h4>
+
+                                            <p class="badge ms-4"><em>Manager</em></p>
+                                        </div>                                        <p class="text-white mb-0">Operations manager with expertise in customer service and staff training.</p>
+                                    </div>
+
+                                    <div class="team-block-image-wrap">
+                                        <img src="images/team/cute-korean-barista-girl-pouring-coffee-prepare-filter-batch-brew-pour-working-cafe.jpg" class="team-block-image img-fluid" alt="">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-6 col-12 mb-4">
+                                <div class="team-block-wrap">
+                                    <div class="team-block-info d-flex flex-column">
+                                        <div class="d-flex mt-auto mb-3">
+                                            <h4 class="text-white mb-0">Jacek</h4>
+
+                                            <p class="badge ms-4"><em>Senior</em></p>
+                                        </div>                                        <p class="text-white mb-0">Master barista with international competition experience and coffee tasting skills.</p>
+                                    </div>
+
+                                    <div class="team-block-image-wrap">
+                                        <img src="images/team/small-business-owner-drinking-coffee.jpg" class="team-block-image img-fluid" alt="">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-6 col-12">
+                                <div class="team-block-wrap">
+                                    <div class="team-block-info d-flex flex-column">
+                                        <div class="d-flex mt-auto mb-3">
+                                            <h4 class="text-white mb-0">Michalina</h4>
+
+                                            <p class="badge ms-4"><em>Barista</em></p>
+                                        </div>                                        <p class="text-white mb-0">Creative barista specializing in latte art and innovative coffee recipes.</p>
+                                    </div>
+
+                                    <div class="team-block-image-wrap">
+                                        <img src="images/team/smiley-business-woman-working-cashier.jpg" class="team-block-image img-fluid" alt="">
+                                    </div>
+                                </div>
+                            </div>                </div>
+                    </div>
+                </section>
+
+                <!-- Billboard Ad Container -->
+                <div id="billboard-container">
+                    <div class="ad-label">Advertisement</div>
+                </div>
+                
+                <!-- Button Ad Container Row -->
+                <div class="button-ad-row container">
+                    <div class="button-ad-container"></div>
+                    <div class="button-ad-container"></div>
+                    <div class="button-ad-container"></div>
+                </div>
+
+                <section class="menu-section section-padding" id="section_3">
+                    <div class="container">
+                        <div class="row">
+
+                            <div class="col-lg-6 col-12 mb-4 mb-lg-0">
+                                <div class="menu-block-wrap">
+                                    <div class="text-center mb-4 pb-lg-2">
+                                        <em class="text-white">Delicious Menu</em>
+                                        <h4 class="text-white">Breakfast</h4>
+                                    </div>                                    <div class="menu-block">
+                                        <div class="d-flex">
+                                            <div class="menu-item-image me-3">
+                                                <img src="images/pancakes.jpg" alt="Pancakes" class="img-fluid rounded">
+                                            </div>                                            <h6>Pancakes</h6>
+                                            <span class="underline"></span>
+
+                                            <strong class="ms-auto">12.50 zł</strong>
+                                        </div>
+
+                                        <div class="border-top mt-2 pt-2">
+                                            <small>Fluffy pancakes with maple syrup and fresh berries</small>
+                                        </div>
+                                    </div>                                    <div class="menu-block my-4">
+                                        <div class="d-flex">
+                                            <div class="menu-item-image me-3">
+                                                <img src="images/toasted_waffle.webp" alt="Toasted Waffle" class="img-fluid rounded">
+                                            </div>                                            <h6>
+                                                Toasted Waffle
+                                            </h6>
+                                        
+                                            <span class="underline"></span>
+
+                                            <strong class="text-white ms-auto"><del>16.50 zł</del></strong>
+
+                                            <strong class="ms-2">12 zł</strong>
+                                        </div>
+
+                                        <div class="border-top mt-2 pt-2">
+                                            <small>Belgian waffles with honey and seasonal fruits</small>
+                                        </div>
+                                    </div>                                    <div class="menu-block">
+                                        <div class="d-flex">
+                                            <div class="menu-item-image me-3">
+                                                <img src="images/fried_chips.jpg" alt="Fried Chips" class="img-fluid rounded">
+                                            </div>                                            <h6>Fried Chips
+                                                <span class="badge ms-3">Recommend</span>
+                                            </h6>
+                                        
+                                            <span class="underline"></span>
+
+                                            <strong class="ms-auto">15 zł</strong>
+                                        </div>
+
+                                        <div class="border-top mt-2 pt-2">
+                                            <small>Crispy potato chips with housemade seasoning</small>
+                                        </div>
+                                    </div>                                    <div class="menu-block my-4">
+                                        <div class="d-flex">
+                                            <div class="menu-item-image me-3">
+                                                <img src="images/croissants.jpg" alt="Croissants" class="img-fluid rounded">
+                                            </div>                                            <h6>Croissants</h6>
+                                        
+                                            <span class="underline"></span>
+
+                                            <strong class="ms-auto">12.50 zł</strong>
+                                        </div>
+
+                                        <div class="border-top mt-2 pt-2">
+                                            <small>Fresh buttery croissants served with strawberry jam</small>
+                                        </div>
+                                    </div>                                    <div class="menu-block">
+                                        <div class="d-flex">
+                                            <div class="menu-item-image me-3">
+                                                <img src="images/banana_cakes.jpg" alt="Banana Cakes" class="img-fluid rounded">
+                                            </div>                                            <h6>Banana Cakes</h6>
+                                        
+                                            <span class="underline"></span>
+
+                                            <strong class="ms-auto">18 zł</strong>
+                                        </div>
+
+                                        <div class="border-top mt-2 pt-2">
+                                            <small>Moist banana cakes with cream cheese frosting</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-12">
+                                <div class="menu-block-wrap">
+                                    <div class="text-center mb-4 pb-lg-2">
+                                        <em class="text-white">Favourite Menu</em>
+                                        <h4 class="text-white">Coffee</h4>
+                                    </div>
+
+                                    <div class="menu-block">
+                                        <div class="d-flex">
+                                            <div class="menu-item-image me-3">
+                                                <img src="images/latte.webp" alt="Latte" class="img-fluid rounded">
+                                            </div>                                            <h6>Latte</h6>
+                                        
+                                            <span class="underline"></span>
+
+                                            <strong class="text-white ms-auto"><del>12.50 zł</del></strong>
+
+                                            <strong class="ms-2">7.50 zł</strong>
+                                        </div>
+
+                                        <div class="border-top mt-2 pt-2">
+                                            <small>Smooth espresso with steamed milk and thin layer of foam</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="menu-block my-4">
+                                        <div class="d-flex">
+                                            <div class="menu-item-image me-3">
+                                                <img src="images/White_Coffee.jpg" alt="White Coffee" class="img-fluid rounded">
+                                            </div>                                            <h6>
+                                                White Coffee
+                                                <span class="badge ms-3">Recommend</span>
+                                            </h6>
+                                        
+                                            <span class="underline"></span>
+
+                                            <strong class="ms-auto">5.90 zł</strong>
+                                        </div>
+
+                                        <div class="border-top mt-2 pt-2">
+                                            <small>Smooth and creamy coffee with a perfect milk balance</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="menu-block">
+                                        <div class="d-flex">
+                                            <div class="menu-item-image me-3">
+                                                <img src="images/chocolate_milk.jpg" alt="Chocolate Milk" class="img-fluid rounded">
+                                            </div>                                            <h6>Chocolate Milk</h6>
+                                        
+                                            <span class="underline"></span>
+
+                                            <strong class="ms-auto">5.50 zł</strong>
+                                        </div>
+
+                                        <div class="border-top mt-2 pt-2">
+                                            <small>Rich and creamy chocolate drink with a silky texture</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="menu-block my-4">
+                                        <div class="d-flex">
+                                            <div class="menu-item-image me-3">
+                                                <img src="images/green_tean.webp" alt="Green Tea" class="img-fluid rounded">
+                                            </div>                                            <h6>Green Tea</h6>
+                                        
+                                            <span class="underline"></span>
+
+                                            <strong class="ms-auto">7.50 zł</strong>
+                                        </div>
+
+                                        <div class="border-top mt-2 pt-2">
+                                            <small>Refreshing and energizing green tea with natural antioxidants</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="menu-block">
+                                        <div class="d-flex">
+                                            <div class="menu-item-image me-3">
+                                                <img src="images/caramel_macchiato.jpg" alt="Caramel Macchiato" class="img-fluid rounded">
+                                            </div>
+                                            <h6>Caramel Macchiato</h6>
+                                        
+                                            <span class="underline"></span>
+
+                                            <strong class="ms-auto">12 zł</strong>
+                                        </div>
+
+                                        <div class="border-top mt-2 pt-2">
+                                            <small>Sweet caramel with strong espresso</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+
+                <section class="reviews-section section-padding section-bg" id="section_4">
+                    <div class="container">
+                        <div class="row justify-content-center">
+
+                            <div class="col-lg-12 col-12 text-center mb-4 pb-lg-2">
+                                <em class="text-white">Reviews by Customers</em>
+
+                                <h2 class="text-white">Testimonials</h2>
+                            </div>
+
+                            <div class="timeline">
+                                <div class="timeline-container timeline-container-left">
+                                    <div class="timeline-content">
+                                        <div class="reviews-block">
+                                            <div class="reviews-block-image-wrap d-flex align-items-center">
+                                                <img src="images/reviews/young-woman-with-round-glasses-yellow-sweater.jpg" class="reviews-block-image img-fluid" alt="">                                                <div class="">
+                                                    <h6 class="text-white mb-0">Sandra</h6>
+                                                    <em class="text-white"> Customers</em>
+                                                </div>
+                                            </div>
+
+                                            <div class="reviews-block-info">
+                                                <p>The atmosphere at Barista Cafe is so cozy! I love coming here to work on my laptop while enjoying their amazing White Coffee. The staff are always friendly and the place has excellent WiFi.</p>
+
+                                                <div class="d-flex border-top pt-3 mt-4">
+                                                    <strong class="text-white">4.5 <small class="ms-2">Rating</small></strong>
+
+                                                    <div class="reviews-group ms-auto">
+                                                        <i class="bi-star-fill"></i>
+                                                        <i class="bi-star-fill"></i>
+                                                        <i class="bi-star-fill"></i>
+                                                        <i class="bi-star-fill"></i>
+                                                        <i class="bi-star"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="timeline-container timeline-container-right">
+                                    <div class="timeline-content">
+                                        <div class="reviews-block">
+                                            <div class="reviews-block-image-wrap d-flex align-items-center">
+                                                <img src="images/reviews/senior-man-white-sweater-eyeglasses.jpg" class="reviews-block-image img-fluid" alt="">                                                <div class="">
+                                                    <h6 class="text-white mb-0">Daniel</h6>
+                                                    <em class="text-white"> Customers</em>
+                                                </div>
+                                            </div>
+
+                                            <div class="reviews-block-info">
+                                                <p>I've been coming to this cafe for years and the quality has never dropped. Their croissants are the best in Poznań, and their caramel macchiato is perfect - not too sweet, just right. The staff remembers my regular order!</p>
+
+                                                <div class="d-flex border-top pt-3 mt-4">
+                                                    <strong class="text-white">4.5 <small class="ms-2">Rating</small></strong>
+
+                                                    <div class="reviews-group ms-auto">
+                                                        <i class="bi-star-fill"></i>
+                                                        <i class="bi-star-fill"></i>
+                                                        <i class="bi-star-fill"></i>
+                                                        <i class="bi-star-fill"></i>
+                                                        <i class="bi-star"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="timeline-container timeline-container-left">
+                                    <div class="timeline-content">
+                                        <div class="reviews-block">
+                                            <div class="reviews-block-image-wrap d-flex align-items-center">
+                                                <img src="images/reviews/young-beautiful-woman-pink-warm-sweater-natural-look-smiling-portrait-isolated-long-hair.jpg" class="reviews-block-image img-fluid" alt="">                                                <div class="">
+                                                    <h6 class="text-white mb-0">Oliwia</h6>
+                                                    <em class="text-white"> Customers</em>
+                                                </div>
+                                            </div>
+
+                                            <div class="reviews-block-info">
+                                                <p>I hosted my small business meeting here last week and it was perfect! The banana cakes were a hit with everyone, and they accommodated our group so well. The latte art is beautiful and worth sharing on Instagram too!</p>
+
+                                                <div class="d-flex border-top pt-3 mt-4">
+                                                    <strong class="text-white">4.5 <small class="ms-2">Rating</small></strong>
+
+                                                    <div class="reviews-group ms-auto">
+                                                        <i class="bi-star-fill"></i>
+                                                        <i class="bi-star-fill"></i>
+                                                        <i class="bi-star-fill"></i>
+                                                        <i class="bi-star-fill"></i>
+                                                        <i class="bi-star"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Ad Section with Skyscraper and Inline Ads -->
+                <div class="container mt-5 mb-5">
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <!-- Inline Ad Container -->
+                            <div class="inline-ad-container">
+                                <div class="ad-label">Advertisement</div>
+                            </div>
+                            
+                            <!-- Game promotion section -->
+                            <div class="text-center my-5">
+                                <h3>Try Our Coffee Bean Catcher Game!</h3>
+                                <p>Collect beans and win special discounts on our premium products!</p>
+                                <a href="#game-section" class="btn custom-btn">Play Now</a>
+                            </div>
+                            
+                            <!-- Another Inline Ad Container -->
+                            <div class="inline-ad-container mt-5">
+                                <div class="ad-label">Advertisement</div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-3">
+                            <!-- Skyscraper Ad Container -->
+                            <div id="skyscraper-container">
+                                <div class="ad-label">Advertisement</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <section class="contact-section section-padding" id="section_5">
+                    <div class="container">
+                        <div class="row">   
+
+                            <div class="col-lg-12 col-12">
+                                <em class="text-white">Say Hello</em>
+                                <h2 class="text-white mb-4 pb-lg-2">Contact</h2>
+                            </div>
+
+                            <div class="col-lg-6 col-12">
+                                <form action="#" method="post" class="custom-form contact-form">
+
+                                <div class="row">
+                                    
+                                    <div class="col-lg-6 col-12">
+                                        <label for="name" class="form-label">Name <sup class="text-danger">*</sup></label>
+
+                                        <input type="text" name="name" id="name" class="form-control" placeholder="Jackson" required="">
+                                    </div>
+
+                                    <div class="col-lg-6 col-12">
+                                        <label for="email" class="form-label">Email Address</label>
+
+                                        <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*" class="form-control" placeholder="Jack@gmail.com" required="">
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="message" class="form-label">How can we help?</label>
+
+                                        <textarea name="message" rows="4" class="form-control" id="message" placeholder="Message" required=""></textarea>
+                                        
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-5 col-12 mx-auto mt-3">
+                                    <button type="submit" class="form-control">Send Message</button>
+                                </div>
+                            </form>
+                            </div>
+
+                            <div class="col-lg-6 col-12 mx-auto mt-5 mt-lg-0 ps-lg-5">
+                                <iframe class="google-map"
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2433.1334006939294!2d16.923140775924136!3d52.40764224191008!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47045b2950618c2d%3A0xfbc95894df0e880c!2s%C5%9Awi%C4%99ty%20Marcin%2067%2C%2061-806%20Pozna%C5%84!5e0!3m2!1sen!2spl!4v1689266378180!5m2!1sen!2spl"
+                                    width="100%" height="300" title="Barista Cafe Location Map" allowfullscreen=""></iframe>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Game Section -->
+                <section class="section-padding section-bg" id="section_6">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12 text-center mb-4">
+                                <h1>Barista Coffee Game</h1>
+                                <p class="mb-4">Catch coffee beans to earn points and unlock rewards!</p>
+                                <!-- Banner container for traditional banner ad -->
+                                <div id="banner-container" class="mb-4"></div>
+                            </div>
+
+                            <!-- Game container -->
+                            <div class="col-lg-12 col-12">
+                                <div class="game-container">
+                                    <h2 class="text-center mb-4">Coffee Bean Catcher Game</h2>
+                                    <p class="text-center mb-4 text-white">Move the cup to catch falling coffee beans. Earn rewards as you progress through levels!</p>
+                                    
+                                    <div id="coffee-game">
+                                        <div id="cup" class="cup"></div>
+                                        <div class="promo-badge">Limited Time Game!</div>
+                                        <div class="level-indicator">Level: <span id="level-display">1</span></div>
+                                    </div>
+                                    
+                                    <div id="score-display">Score: 0</div>
+                                    
+                                    <div class="progress-bar-container">
+                                        <div id="progress-bar" class="progress-bar"></div>
+                                    </div>
+                                    
+                                    <div class="text-center mt-3">
+                                        <button id="start-button" class="btn custom-btn me-2">Start Game</button>
+                                        <button id="reset-button" class="btn custom-btn custom-border-btn">Reset</button>
+                                    </div>
+                                    
+                                    <div id="reward-display" class="reward-display">
+                                        <h3>Congratulations!</h3>
+                                        <p>You've earned a special discount:</p>
+                                        <div class="coupon p-2 bg-white text-dark mb-3">
+                                            <h4 class="mb-0">15% OFF</h4>
+                                            <p class="small mb-0">Use code: COFFEEGAME</p>
+                                        </div>
+                                        <p>Show this to our staff on your next visit!</p>
+                                    </div>
+                                    
+                                    <div class="mt-4">
+                                        <h4 class="mb-3">Achievements</h4>
+                                        <div class="achievements">
+                                            <div id="achievement-1" class="achievement">
+                                                ☕
+                                                <div class="achievement-tooltip">Beginner: Score 50 points</div>
+                                            </div>
+                                            <div id="achievement-2" class="achievement">
+                                                ☕☕
+                                                <div class="achievement-tooltip">Amateur: Score 200 points</div>
+                                            </div>
+                                            <div id="achievement-3" class="achievement">
+                                                ⭐
+                                                <div class="achievement-tooltip">Professional: Reach Level 3</div>
+                                            </div>
+                                            <div id="achievement-4" class="achievement">
+                                                🏆
+                                                <div class="achievement-tooltip">Master: Catch 5 special beans</div>
+                                            </div>
+                                            <div id="achievement-5" class="achievement">
+                                                🎯
+                                                <div class="achievement-tooltip">Perfect: Catch 15 beans in a row</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="product-ads"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- External Ads Container -->
+                        <div class="row mt-4">
+                            <div class="col-lg-12 col-12">
+                                <div id="external-product-ads">
+                                    <!-- Product ads will appear here -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-5">
+                            <div class="col-lg-12 col-12">
+                                <h2 class="text-center mb-4">How To Play</h2>
+                                <div class="row">
+                                    <div class="col-md-4 mb-4">
+                                        <div class="custom-block bg-white h-100">
+                                            <h5 class="mb-2">1. Move Your Cup</h5>
+                                            <p>Use your mouse or touch to move the cup left and right to catch falling coffee beans.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-4 mb-4">
+                                        <div class="custom-block bg-white h-100">
+                                            <h5 class="mb-2">2. Catch Special Beans</h5>
+                                            <p>Golden beans are worth 30 points! Catch them for faster progress and special product offers.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-4 mb-4">
+                                        <div class="custom-block bg-white h-100">
+                                            <h5 class="mb-2">3. Earn Rewards</h5>
+                                            <p>Level up to unlock achievements and earn special discounts to use in our café!</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                        </div>
+                    </div>
+                </section>
+
+                <section class="faq-section section-padding" id="section_7">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12 col-12 text-center mb-5">
+                                <em>Help Center</em>
+                                <h2>Frequently Asked Questions</h2>
+                            </div>
+
+                            <div class="col-lg-8 col-12">
+                                <h3 class="mb-4">Coffee Questions</h3>
+                                <div class="accordion" id="coffeeAccordion">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#coffeeOne" aria-expanded="true" aria-controls="coffeeOne">
+                                                Where do you source your coffee beans?
+                                            </button>
+                                        </h2>
+                                        <div id="coffeeOne" class="accordion-collapse collapse show" data-bs-parent="#coffeeAccordion">
+                                            <div class="accordion-body">
+                                                We source our coffee beans from ethical farms in Ethiopia, Colombia, Brazil, and Indonesia. We maintain direct relationships with many of our farmers, ensuring fair prices and sustainable practices. All of our beans are specialty grade and roasted in small batches at our Poznań roastery to ensure maximum freshness and flavor.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#coffeeTwo" aria-expanded="false" aria-controls="coffeeTwo">
+                                                What makes your coffee different from other cafes?
+                                            </button>
+                                        </h2>
+                                        <div id="coffeeTwo" class="accordion-collapse collapse" data-bs-parent="#coffeeAccordion">
+                                            <div class="accordion-body">
+                                                Our coffee stands out for several reasons: we select only the top 1% of coffee beans available, we roast in small batches to ensure freshness, our baristas undergo extensive training (minimum 6 months), and we use precision brewing methods tailored to each specific coffee origin. We also focus on highlighting the natural flavors in each coffee rather than masking them with excessive additives.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#coffeeThree" aria-expanded="false" aria-controls="coffeeThree">
+                                                Do you offer decaffeinated options?
+                                            </button>
+                                        </h2>
+                                        <div id="coffeeThree" class="accordion-collapse collapse" data-bs-parent="#coffeeAccordion">
+                                            <div class="accordion-body">
+                                                Yes! We offer Swiss Water Process decaffeinated coffee, which uses water rather than chemicals to remove caffeine while preserving the coffee's natural flavors. We typically have at least one decaf option for espresso drinks and one for filter coffee available daily.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h3 class="mt-5 mb-4">Orders & Reservations</h3>
+                                <div class="accordion" id="ordersAccordion">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#ordersOne" aria-expanded="true" aria-controls="ordersOne">
+                                                How can I make a reservation?
+                                            </button>
+                                        </h2>
+                                        <div id="ordersOne" class="accordion-collapse collapse show" data-bs-parent="#ordersAccordion">
+                                            <div class="accordion-body">
+                                                You can make a reservation through our website by visiting the Reservation page, by calling us at +48 612 223 344, or through our mobile app. Reservations can be made up to 14 days in advance and we recommend booking at least 24 hours ahead for weekend visits.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ordersTwo" aria-expanded="false" aria-controls="ordersTwo">
+                                                Do you deliver coffee beans?
+                                            </button>
+                                        </h2>
+                                        <div id="ordersTwo" class="accordion-collapse collapse" data-bs-parent="#ordersAccordion">
+                                            <div class="accordion-body">
+                                                Yes! We deliver coffee beans throughout Poznań and surrounding areas. We also offer nationwide shipping for our subscription service. Local orders placed before noon are typically delivered the same day, while orders outside Poznań are shipped within 24 hours and usually arrive within 2-3 business days.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-12 mt-5 mt-lg-0">
+                                <div class="chat-bot">
+                                    <h3 class="mb-3">Coffee Assistant</h3>
+                                    <p class="mb-4">Don't see your question? Ask our virtual barista!</p>
+                                    
+                                    <div class="chat-messages" id="chatMessages">
+                                        <div class="bot-message">Hello! I'm the Barista Cafe virtual assistant. How can I help you today?</div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    
+                                    <div class="chat-input">
+                                        <input type="text" id="userMessage" placeholder="Type your question here...">
+                                        <button id="sendMessage">Send</button>
+                                    </div>
+                                </div>
+
+                                <div class="faq-container mt-5">
+                                    <h4>Still have questions?</h4>
+                                    <p>Contact our customer support team:</p>
+                                    <ul class="list-unstyled">
+                                        <li class="mb-2"><i class="bi-telephone me-2"></i>+48 612 223 344</li>
+                                        <li class="mb-2"><i class="bi-envelope me-2"></i> <a href="mailto:support@barista.pl">support@barista.pl</a></li>
+                                        <li><i class="bi-chat-dots me-2"></i> Live chat available 9:00-18:00 daily</li>
+                                    </ul>
+                                </div>
+                                
+                                <!-- Ad section -->
+                                <div class="mt-5">
+                                    <div id="in-text-banner-container" class="mb-4"></div>
+                                    <div id="button-ad-container" class="d-flex justify-content-center mt-4"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Media & Press Section -->
+                <section class="media-section section-padding" id="section_8">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12 col-12 text-center mb-5">
+                                <em>Stay Updated</em>
+                                <h2>Media & Press</h2>
+                                <p>Official press releases, media kit, and resources</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-8 col-12">
+                                <h3 class="mb-4">Latest Press Releases</h3>
+
+                                <div class="press-card">
+                                    <span class="press-date">May 12, 2025</span>
+                                    <h4>Barista Cafe Announces New Sustainable Coffee Line</h4>
+                                    <p>Barista Cafe is proud to announce the launch of our new "Earth Friendly" coffee line, featuring beans grown using regenerative farming practices. This new premium offering underscores our commitment to environmental sustainability while delivering exceptional flavor profiles.</p>
+                                    <a href="#" class="download-btn">Download Press Release</a>
+                                </div>
+                                
+                                <div class="press-card">
+                                    <span class="press-date">April 3, 2025</span>
+                                    <h4>Barista Cafe Opens 5th Location in Poznań</h4>
+                                    <p>We are excited to announce the grand opening of our 5th cafe, located in the vibrant Stary Browar shopping mall in Poznań. The new location features our signature coffee offerings, an expanded food menu with local specialties, and our first outdoor terrace seating area.</p>
+                                    <a href="#" class="download-btn">Download Press Release</a>
+                                </div>
+                                
+                                <div class="press-card">
+                                    <span class="press-date">February 18, 2025</span>
+                                    <h4>Barista Cafe Named "Best Coffee Shop Chain" for Second Year</h4>
+                                    <p>Barista Cafe is honored to be recognized as "Best Coffee Shop Chain" by the Poznań Restaurant Association for the second consecutive year. This award recognizes our commitment to quality, customer service, and community engagement.</p>
+                                    <a href="#" class="download-btn">Download Press Release</a>
+                                </div>
+
+                                <div class="media-contact mt-5">
+                                    <h3>Media Contact</h3>
+                                    <p>For press inquiries, interview requests, or additional information, please contact:</p>
+                                    <p><strong>Aleksandra Nowak</strong><br>
+                                    Public Relations Manager<br>
+                                    Email: <a href="mailto:prasa@barista.pl">prasa@barista.pl</a><br>
+                                    Phone: +48 612 223 345</p>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-12 mt-5 mt-lg-0">
+                                <h3 class="mb-4">Media Resources</h3>
+                                
+                                <div class="press-card">
+                                    <h4>Brand Assets</h4>
+                                    <p>Access our logo files, brand guidelines, approved product images, and cafe photos for media use.</p>
+                                    <a href="#" class="download-btn">Download Media Kit</a>
+                                </div>
+
+                                <div class="press-card">
+                                    <h4>Company Fact Sheet</h4>
+                                    <p>Get key information about Barista Cafe, including our history, locations, product offerings, and mission statement.</p>
+                                    <a href="#" class="download-btn">Download Fact Sheet</a>
+                                </div>
+
+                                <div class="press-card">
+                                    <h4>Executive Bios & Photos</h4>
+                                    <p>Access professional biographies and high-resolution photos of our executive leadership team.</p>
+                                    <a href="#" class="download-btn">Download Bios & Photos</a>
+                                </div>
+                                
+                                <div class="press-card">
+                                    <h4>In The News</h4>
+                                    <ul>
+                                        <li><a href="#">"How Barista Cafe is Changing Coffee Culture" - Poznań Business Journal</a></li>
+                                        <li><a href="#">"The Rise of Specialty Coffee in Poland" - Food & Beverage Today</a></li>
+                                        <li><a href="#">"Interview with Aleksandra Nowak" - Entrepreneur Weekly</a></li>
+                                        <li><a href="#">"Top 10 Coffee Shops in Poznań" - Travel Magazine</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Investor Relations Section -->
+                <section class="investor-section section-padding" id="section_9">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12 col-12 text-center mb-5">
+                                <em>Financial Information</em>
+                                <h2>Investor Relations</h2>
+                                <p>Information for current and prospective shareholders</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-8 col-12">
+                                <h3 class="mb-4">Financial Performance</h3>
+
+                                <div class="press-card">
+                                    <span class="press-date">Q1 2025</span>
+                                    <h4>Quarterly Financial Results</h4>
+                                    <p>Barista Cafe reported a 12% year-over-year revenue increase in the first quarter of 2025. Our strategic expansion into new locations and the successful launch of our specialty bean subscription service have contributed significantly to this growth.</p>
+                                    <a href="#" class="download-btn">Download Q1 Report</a>
+                                </div>
+                                
+                                <div class="press-card">
+                                    <span class="press-date">Fiscal Year 2024</span>
+                                    <h4>Annual Financial Report</h4>
+                                    <p>Our 2024 fiscal year saw a 15% increase in total revenue and a 20% growth in operating profit. The implementation of sustainable practices has not only strengthened our brand but also improved our operational efficiency.</p>
+                                    <a href="#" class="download-btn">Download Annual Report</a>
+                                </div>
+                                
+                                <h3 class="mb-4 mt-5">Corporate Governance</h3>
+                                <div class="press-card">
+                                    <h4>Board of Directors</h4>
+                                    <p>Our Board of Directors brings diverse expertise in food & beverage, retail operations, finance, and sustainability to guide the company's strategic direction.</p>
+                                    <ul>
+                                        <li><strong>Aleksandra Nowak</strong> - CEO & Chairperson</li>
+                                        <li><strong>Piotr Kowalski</strong> - CFO & Board Member</li>
+                                        <li><strong>Maria Wiśniewska</strong> - Independent Director</li>
+                                        <li><strong>Jan Zieliński</strong> - Independent Director</li>
+                                        <li><strong>Anna Dąbrowska</strong> - Independent Director</li>
+                                    </ul>
+                                    <a href="#" class="download-btn">Board Member Biographies</a>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-12 mt-5 mt-lg-0">
+                                <h3 class="mb-4">Investor Resources</h3>
+                                
+                                <div class="press-card">
+                                    <h4>Company Overview</h4>
+                                    <p>Barista Cafe is a premium coffee chain founded in 2015 in Poznań, Poland. We currently operate 15 locations across the country with plans for continued expansion.</p>
+                                    <a href="#" class="download-btn">Investor Presentation</a>
+                                </div>
+
+                                <div class="press-card">
+                                    <h4>Growth Strategy</h4>
+                                    <p>Our five-year strategic plan focuses on:
+                                    <ul>
+                                        <li>Expanding to 30 locations by 2028</li>
+                                        <li>Increasing e-commerce and subscription revenue by 200%</li>
+                                        <li>Launching our proprietary coffee products in retail channels</li>
+                                        <li>International expansion beginning with Germany and Czech Republic</li>
+                                    </ul>
+                                    </p>
+                                </div>
+
+                                <div class="press-card">
+                                    <h4>Investor Contact</h4>
+                                    <p>For investor inquiries and shareholder services:</p>
+                                    <p><strong>Piotr Kowalski</strong><br>
+                                    Chief Financial Officer<br>
+                                    Email: <a href="mailto:investors@barista.pl">investors@barista.pl</a><br>
+                                    Phone: +48 612 223 346</p>
+                                </div>
+
+                                <div class="press-card">
+                                    <h4>Upcoming Events</h4>
+                                    <ul>
+                                        <li><strong>June 15, 2025</strong> - Annual Shareholders Meeting</li>
+                                        <li><strong>July 28, 2025</strong> - Q2 2025 Earnings Call</li>
+                                        <li><strong>September 5, 2025</strong> - Investor Day (Poznań)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <footer class="site-footer">
+                    <div class="container">
+                        <div class="row">
+
+                            <div class="col-lg-4 col-12 me-auto">
+                                <em class="text-white d-block mb-4">Where to find us?</em>
+                            
+                                <strong class="text-white">
+                                    <i class="bi-geo-alt me-2"></i>
+                                    Święty Marcin 67, 61-806 Poznań, Poland
+                                </strong>
+                            
+                                <ul class="social-icon mt-4">
+                                    <li class="social-icon-item">
+                                        <a href="#" class="social-icon-link bi-facebook" title="Visit our Facebook page">
+                                            <span class="visually-hidden">Facebook</span>
+                                        </a>
+                                    </li>
+                            
+                                    <li class="social-icon-item">
+                                        <a href="https://x.com/minthu" target="_new" class="social-icon-link bi-twitter"
+                                            title="Visit our Twitter page">
+                                            <span class="visually-hidden">Twitter</span>
+                                        </a>
+                                    </li>
+                            
+                                    <li class="social-icon-item">
+                                        <a href="#" class="social-icon-link bi-whatsapp" title="Contact us via WhatsApp">
+                                            <span class="visually-hidden">WhatsApp</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="col-lg-3 col-12 mt-4 mb-3 mt-lg-0 mb-lg-0">
+                                <em class="text-white d-block mb-4">Contact</em>
+
+                                <p class="d-flex mb-1">
+                                    <strong class="me-2">Phone:</strong>
+                                    <a href="tel: 305-240-9671" class="site-footer-link">
+                                        +48 612 223 344
+                                    </a>
+                                </p>
+
+                                <p class="d-flex">
+                                    <strong class="me-2">Email:</strong>                                    <a href="mailto:kontakt@barista.pl" class="site-footer-link">
+                                        kontakt@barista.pl
+                                    </a>
+                                </p>
+                            </div>
+
+
+                            <div class="col-lg-5 col-12">
+                                <em class="text-white d-block mb-4">Opening Hours.</em>
+
+                                <ul class="opening-hours-list">
+                                    <li class="d-flex">
+                                        Monday - Friday
+                                        <span class="underline"></span>
+
+                                        <strong>9:00 - 18:00</strong>
+                                    </li>
+
+                                    <li class="d-flex">
+                                        Saturday
+                                        <span class="underline"></span>
+
+                                        <strong>11:00 - 16:30</strong>
+                                    </li>
+
+                                    <li class="d-flex">
+                                        Sunday
+                                        <span class="underline"></span>
+
+                                        <strong>Closed</strong>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="col-lg-8 col-12 mt-4">
+                                <p class="copyright-text mb-0">Copyright © Barista Cafe 2025
+                                    - Design: <a rel="sponsored noopener" href="https://www.tooplate.com" target="_blank">Taoplate</a></p>
+                            </div>
+                    </div>
+                </footer>
+            </main>        <!-- JAVASCRIPT FILES -->        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.sticky.js"></script>
+        <script src="js/click-scroll.js"></script>        <script src="js/vegas.min.js"></script>
+        <script src="js/custom.js"></script>
+        <script src="js/game.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Wait for all elements to be loaded
+                setTimeout(function() {
+                    initChatBot();
+                }, 100);
+            });
+            
+            function initChatBot() {
+                try {
+                    const chatMessages = document.getElementById('chatMessages');
+                    const userMessage = document.getElementById('userMessage');
+                    const sendMessage = document.getElementById('sendMessage');
+
+                    if (!chatMessages) {
+                        console.error('Chat messages container not found');
+                        return;
+                    }
+
+                    if (!userMessage) {
+                        console.error('User message input not found');
+                        return;
+                    }
+
+                    if (!sendMessage) {
+                        console.error('Send message button not found');
+                        return;
+                    }
+                    
+                    // Sample responses for the chatbot
+                    const responses = {
+                        'hello': 'Hello! How can I help you with our coffee or services today?',
+                        'hi': 'Hi there! What can I help you with today?',
+                        'hours': 'Our cafes are open daily from 9:00 to 18:00, with slightly shorter hours on Saturdays (11:00-16:30). We are closed on Sundays.',
+                        'locations': 'We have 15 locations across Poland, with our flagship store on Święty Marcin 67.',
+                        'menu': 'Our menu includes espresso drinks, pour-over coffee, cold brew, teas, pastries, and light meals. You can view the full menu on our website under "Our Menu" section.',
+                        'wifi': 'Yes, all our locations offer complimentary high-speed WiFi for customers.',
+                        'reservation': 'You can make a reservation through our website, by calling us at +48 61 222 3344, or through our mobile app.',
+                        'parking': 'Most of our locations have nearby parking options. Our flagship store has convenient public parking nearby at Plac Wolności.',
+                        'gift cards': 'Yes! We offer digital and physical gift cards in any denomination. You can purchase them in-store or on our website.',
+                        'rewards': 'Our loyalty program gives you 1 point for every 10 zł spent. Accumulate points to earn free drinks, food items, and exclusive offers.',
+                        'default': 'I don\'t have specific information about that yet. Please contact our customer support at kontakt@barista.pl or call +48 61 222 3344 for assistance.'
+                    };
+                    
+                    // Function to add a message to the chat
+                    function addMessage(text, isUser) {
+                        try {
+                            const messageDiv = document.createElement('div');
+                            messageDiv.className = isUser ? 'user-message' : 'bot-message';
+                            messageDiv.textContent = text;
+                            chatMessages.appendChild(messageDiv);
+                            
+                            // Add clearfix after each message
+                            const clearfix = document.createElement('div');
+                            clearfix.className = 'clearfix';
+                            chatMessages.appendChild(clearfix);
+                            
+                            // Scroll to bottom
+                            chatMessages.scrollTop = chatMessages.scrollHeight;
+                        } catch (error) {
+                            console.error('Error adding message:', error);
+                        }
+                    }
+                    
+                    // Function to get bot response
+                    function getBotResponse(message) {
+                        message = message.toLowerCase();
+                        
+                        for (const key in responses) {
+                            if (message.includes(key)) {
+                                return responses[key];
+                            }
+                        }
+                        
+                        return responses.default;
+                    }
+                    
+                    // Send message when button is clicked
+                    sendMessage.addEventListener('click', function() {
+                        try {
+                            const message = userMessage.value.trim();
+                            
+                            if (message) {
+                                addMessage(message, true);
+                                userMessage.value = '';
+                                
+                                // Simulate typing delay
+                                setTimeout(function() {
+                                    const response = getBotResponse(message);
+                                    addMessage(response, false);
+                                }, 500);
+                            }
+                        } catch (error) {
+                            console.error('Error sending message:', error);
+                        }
+                    });
+                    
+                    // Send message when Enter is pressed
+                    userMessage.addEventListener('keypress', function(event) {
+                        if (event.key === 'Enter') {
+                            sendMessage.click();
+                        }
+                    });
+                } catch (error) {
+                    console.error('Error initializing chat bot:', error);
+                }            }
+        </script>
+        
+        <!-- Toplayer Ad -->
+        <div class="toplayer-ad" id="toplayer-ad">
+            <button class="close-btn">&times;</button>
+            <h3>Special Offer!</h3>
+            <p>25% discount on all our signature coffee blends this week only!</p>
+            <img src="images/coffee-beans.png" alt="Special Coffee Offer" style="max-width: 200px; margin: 15px auto;">
+            <button class="btn custom-btn mt-2" onclick="document.getElementById('toplayer-ad').style.display='none';">Get Offer Now</button>
+        </div>
+        
+        <!-- Newsletter Popup (Email Sign-up Form) -->
+        <div class="newsletter-popup" id="newsletter-popup">            <button class="close-btn" aria-label="Close">&times;</button>
+            <h4>Join Our Newsletter</h4>
+            <p>Subscribe for exclusive coffee tips, recipes & special offers!</p>
+            <form id="newsletter-form">
+                <input type="email" placeholder="Your email address" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+        
+        <!-- Ad Scripts -->
+        <script src="js/ads.js"></script>
+        <script>
+            // Display toplayer ad after 5 seconds
+            setTimeout(function() {
+                document.getElementById('toplayer-ad').style.display = 'block';
+            }, 5000);
+            
+            // Display newsletter popup after 15 seconds
+            setTimeout(function() {
+                if (document.getElementById('toplayer-ad').style.display !== 'block') {
+                    document.getElementById('newsletter-popup').style.display = 'block';
+                } else {
+                    setTimeout(function() {
+                        document.getElementById('newsletter-popup').style.display = 'block';
+                    }, 10000);
+                }
+            }, 15000);
+            
+            // Close button functionality
+            document.querySelectorAll('.close-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    this.parentElement.style.display = 'none';
+                });
+            });
+            
+            // Handle newsletter form submission
+            document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Thank you for subscribing to our newsletter!');
+                document.getElementById('newsletter-popup').style.display = 'none';
+            });
+        </script>
+    </body>
+</html>
