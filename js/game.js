@@ -206,6 +206,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // Store recent ads to manage positioning of multiple ads
     let activeAds = [];
       function showProductAd() {
+        // Only show one ad at a time - remove any existing ads first
+        if (activeAds.length > 0) {
+            // Remove all existing ads
+            activeAds.forEach(existingAd => {
+                if (existingAd && existingAd.parentNode) {
+                    existingAd.parentNode.removeChild(existingAd);
+                }
+            });
+            // Clear the active ads array
+            activeAds = [];
+        }
+        
         const product = coffeeProducts[Math.floor(Math.random() * coffeeProducts.length)];
         const ad = document.createElement('div');
         ad.className = 'product-ad';
@@ -221,13 +233,34 @@ document.addEventListener('DOMContentLoaded', function() {
         // Add cursor pointer to show it's clickable
         ad.style.cursor = 'pointer';
         
+        // Make ads smaller based on screen size
+        const isMobile = window.innerWidth <= 768;
+        
+        // Set size based on device
+        if (isMobile) {
+            // Much smaller for mobile - reduce size significantly
+            ad.style.width = '120px';  // Reduced from 150px
+            ad.style.padding = '6px';  // Reduced from 8px
+            ad.style.fontSize = '0.7rem'; // Smaller font
+            ad.style.opacity = '0.8'; // Slightly more transparent
+        } else {
+            // Default size for desktop
+            ad.style.width = '220px';
+            ad.style.padding = '12px';
+        }
+        
         // Add directly to document body to position as fixed popup in corner
         document.body.appendChild(ad);
         
-        // Calculate position based on number of active ads
-        const adIndex = activeAds.length;
-        if (adIndex > 0) {
-            ad.style.bottom = `${120 + (adIndex * 100)}px`; // Stack ads with space between
+        // Position the ad
+        if (isMobile) {
+            // Position higher and to the side on mobile to not cover the game
+            ad.style.bottom = '100px';
+            ad.style.right = '5px'; // Closer to edge on mobile
+        } else {
+            // Normal position for desktop
+            ad.style.bottom = '20px';
+            ad.style.right = '20px';
         }
         
         // Add to active ads array
@@ -269,20 +302,9 @@ document.addEventListener('DOMContentLoaded', function() {
             if (index > -1) {
                 activeAds.splice(index, 1);
             }
-            // Reposition remaining ads
-            repositionAds();
         }
     }
-    
-    function repositionAds() {
-        activeAds.forEach((ad, index) => {
-            if (index === 0) {
-                ad.style.bottom = '20px';
-            } else {
-                ad.style.bottom = `${120 + ((index-1) * 100)}px`;
-            }
-        });
-    }
+      // Function removed as we now only show one ad at a time
       function updateProgress() {
         const progress = (score % 100) / 100;
         progressBar.style.width = `${progress * 100}%`;

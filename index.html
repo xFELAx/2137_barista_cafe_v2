@@ -273,10 +273,9 @@ Bootstrap 5 HTML CSS Template
             80% { opacity: 1; transform: translateX(0) scale(1); }
             100% { opacity: 0; transform: translateX(100px) scale(0.95); }
         }
-        
-        .achievement-notification {
+          .achievement-notification {
             position: fixed !important;
-            top: 120px !important;
+            top: 100px !important;
             left: 50% !important;
             transform: translateX(-50%) !important;
             background-color: rgba(0, 0, 0, 0.8) !important;
@@ -289,6 +288,13 @@ Bootstrap 5 HTML CSS Template
             box-shadow: 0 0 20px rgba(255, 215, 0, 0.5) !important;
             animation: fadeIn 0.5s, fadeOut 0.5s 2.5s !important;
             pointer-events: none !important;
+        }
+        
+        /* Add responsive positioning for the notification */
+        @media screen and (min-width: 992px) {
+            .achievement-notification {
+                top: 180px !important; /* Increase top position on larger screens to appear below navbar */
+            }
         }
         
         .coupon {
