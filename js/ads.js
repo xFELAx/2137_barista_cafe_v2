@@ -1,14 +1,17 @@
 // Basic ads.js file for banner ads and other advertising elements
-document.addEventListener('DOMContentLoaded', function() {
-    // Traditional banner ad
+document.addEventListener('DOMContentLoaded', function() {    // Traditional banner ad
     const bannerContainers = document.querySelectorAll('#banner-container');
     
     if (bannerContainers.length > 0) {
         bannerContainers.forEach(container => {
             const banner = document.createElement('div');
             banner.className = 'traditional-banner';
-            banner.style.width = '468px';
-            banner.style.height = '60px';
+            
+            // Responsive sizing
+            const isMobile = window.innerWidth <= 480;
+            banner.style.width = isMobile ? '100%' : '468px';
+            banner.style.maxWidth = isMobile ? '350px' : '468px';
+            banner.style.height = isMobile ? '50px' : '60px';
             banner.style.margin = '0 auto';
             banner.style.backgroundColor = '#70461e';
             banner.style.border = '1px solid #502f0e';
@@ -18,7 +21,10 @@ document.addEventListener('DOMContentLoaded', function() {
             banner.style.justifyContent = 'center';
             banner.style.color = 'white';
             banner.style.fontWeight = 'bold';
-            banner.innerHTML = 'Try Our New Premium Coffee Blend - Now In Store!';
+            banner.style.fontSize = isMobile ? '12px' : '14px';
+            banner.style.padding = '5px';
+            banner.style.boxSizing = 'border-box';
+            banner.innerHTML = isMobile ? 'Try Our New Premium Blend!' : 'Try Our New Premium Coffee Blend - Now In Store!';
             
             // Make it clickable
             banner.style.cursor = 'pointer';
@@ -29,14 +35,16 @@ document.addEventListener('DOMContentLoaded', function() {
             container.appendChild(banner);
         });
     }
-    
-    // Billboard ad (for larger sections)
+      // Billboard ad (for larger sections)
     const billboardContainer = document.getElementById('billboard-container');
     if (billboardContainer) {
         const billboard = document.createElement('div');
         billboard.className = 'billboard-ad';
-        billboard.style.width = '750px';
-        billboard.style.height = '100px';
+          // Responsive sizing for billboard
+        const isMobile = window.innerWidth <= 480;
+        billboard.style.width = isMobile ? '100%' : '750px';
+        billboard.style.maxWidth = isMobile ? '350px' : '750px';
+        billboard.style.height = '100px'; // Jednakowa wysokość na wszystkich urządzeniach
         billboard.style.margin = '0 auto';
         billboard.style.backgroundColor = '#502f0e';
         billboard.style.backgroundImage = 'linear-gradient(45deg, #70461e, #502f0e)';
@@ -46,10 +54,15 @@ document.addEventListener('DOMContentLoaded', function() {
         billboard.style.alignItems = 'center';
         billboard.style.justifyContent = 'center';
         billboard.style.color = 'white';
-        billboard.style.fontSize = '24px';
+        billboard.style.fontSize = isMobile ? '16px' : '24px'; // Zwiększony font na mobile
         billboard.style.fontWeight = 'bold';
         billboard.style.textAlign = 'center';
-        billboard.innerHTML = 'Grand Opening: Visit Our New Location <br> 20% OFF All Coffee Drinks!';
+        billboard.style.padding = isMobile ? '10px' : '5px'; // Więcej paddingu na mobile
+        billboard.style.boxSizing = 'border-box';
+        billboard.style.lineHeight = isMobile ? '1.2' : '1.4'; // Dodana kontrola wysokości linii
+        billboard.innerHTML = isMobile ? 
+            'Grand Opening: New Location<br><strong>20% OFF All Drinks!</strong>' : 
+            'Grand Opening: Visit Our New Location <br> 20% OFF All Coffee Drinks!';
         
         billboard.style.cursor = 'pointer';
         billboard.addEventListener('click', function() {
@@ -58,33 +71,46 @@ document.addEventListener('DOMContentLoaded', function() {
         
         billboardContainer.appendChild(billboard);
     }
-    
-    // Wide Skyscraper (vertical banner)
+      // Wide Skyscraper (vertical banner)
     const skyscraperContainer = document.getElementById('skyscraper-container');
     if (skyscraperContainer) {
         const skyscraper = document.createElement('div');
         skyscraper.className = 'skyscraper-ad';
-        skyscraper.style.width = '160px';
-        skyscraper.style.height = '600px';
+        
+        // Responsive sizing for skyscraper
+        const isMobile = window.innerWidth <= 768; // Użyjemy 768px dla skyscraper
+        skyscraper.style.width = isMobile ? '100%' : '160px';
+        skyscraper.style.maxWidth = isMobile ? '300px' : '160px';
+        skyscraper.style.height = isMobile ? '200px' : '600px'; // Znacznie mniejsza wysokość na mobile
+        skyscraper.style.margin = isMobile ? '0 auto' : '0';
         skyscraper.style.backgroundColor = '#f8f1e9';
         skyscraper.style.border = '1px solid #70461e';
         skyscraper.style.borderRadius = '5px';
         skyscraper.style.display = 'flex';
-        skyscraper.style.flexDirection = 'column';
+        skyscraper.style.flexDirection = isMobile ? 'row' : 'column'; // Poziomy layout na mobile
         skyscraper.style.alignItems = 'center';
         skyscraper.style.justifyContent = 'space-between';
-        skyscraper.style.padding = '15px';
+        skyscraper.style.padding = isMobile ? '10px' : '15px';
         skyscraper.style.boxSizing = 'border-box';
+        skyscraper.style.flexWrap = isMobile ? 'wrap' : 'nowrap';
         
-        // Content for the skyscraper
-        skyscraper.innerHTML = `
-            <div style="font-weight: bold; color: #502f0e; margin-bottom: 10px; text-align: center;">COFFEE LOVERS SPECIAL</div>
-            <img src="images/coffee-beans.png" alt="Coffee" style="max-width: 80%; height: auto; margin: 10px 0;">
-            <div style="color: #70461e; margin: 10px 0; text-align: center;">Premium Arabica Beans</div>
-            <img src="images/coffee-beans.png" alt="Coffee" style="max-width: 80%; height: auto; margin: 10px 0;">
-            <div style="color: #70461e; margin: 10px 0; text-align: center;">Free Shipping on Orders $30+</div>
-            <button style="background-color: #70461e; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; margin-top: 10px;">SHOP NOW</button>
-        `;
+        // Content for the skyscraper - responsive
+        if (isMobile) {
+            skyscraper.innerHTML = `
+                <div style="font-weight: bold; color: #502f0e; margin: 5px; text-align: center; font-size: 14px;">COFFEE SPECIAL</div>
+                <div style="color: #70461e; margin: 5px; text-align: center; font-size: 12px;">Premium Beans</div>
+                <button style="background-color: #70461e; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 12px;">SHOP NOW</button>
+            `;
+        } else {
+            skyscraper.innerHTML = `
+                <div style="font-weight: bold; color: #502f0e; margin-bottom: 10px; text-align: center;">COFFEE LOVERS SPECIAL</div>
+                <img src="images/coffee-beans.png" alt="Coffee" style="max-width: 80%; height: auto; margin: 10px 0;">
+                <div style="color: #70461e; margin: 10px 0; text-align: center;">Premium Arabica Beans</div>
+                <img src="images/coffee-beans.png" alt="Coffee" style="max-width: 80%; height: auto; margin: 10px 0;">
+                <div style="color: #70461e; margin: 10px 0; text-align: center;">Free Shipping on Orders $30+</div>
+                <button style="background-color: #70461e; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; margin-top: 10px;">SHOP NOW</button>
+            `;
+        }
         
         skyscraper.style.cursor = 'pointer';
         skyscraper.addEventListener('click', function() {
@@ -159,8 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
             container.appendChild(inlineAd);
         });
     }
-    
-    // Interstitial ad (stitial) - shown when navigating between pages
+      // Interstitial ad (stitial) - shown when navigating between pages
     // We'll simulate this by creating a function that can be triggered on navigation events
     function showInterstitial() {
         // Create overlay
@@ -175,35 +200,61 @@ document.addEventListener('DOMContentLoaded', function() {
         overlay.style.display = 'flex';
         overlay.style.alignItems = 'center';
         overlay.style.justifyContent = 'center';
+        overlay.style.padding = '10px';
+        overlay.style.boxSizing = 'border-box';
         
-        // Create interstitial content
+        // Create interstitial content with responsive design
         const content = document.createElement('div');
-        content.style.width = '80%';
-        content.style.maxWidth = '600px';
+        const isMobile = window.innerWidth <= 480;
+        
+        content.style.width = isMobile ? '95%' : '80%';
+        content.style.maxWidth = isMobile ? '350px' : '600px';
+        content.style.maxHeight = isMobile ? '90vh' : '80vh';
         content.style.backgroundColor = 'white';
-        content.style.padding = '20px';
+        content.style.padding = isMobile ? '15px' : '20px';
         content.style.borderRadius = '10px';
         content.style.textAlign = 'center';
         content.style.position = 'relative';
+        content.style.overflow = 'auto';
+        content.style.boxSizing = 'border-box';
         
         // Close button
         const closeBtn = document.createElement('button');
         closeBtn.innerHTML = '&times;';
         closeBtn.style.position = 'absolute';
-        closeBtn.style.top = '10px';
-        closeBtn.style.right = '10px';
+        closeBtn.style.top = '5px';
+        closeBtn.style.right = '5px';
         closeBtn.style.border = 'none';
         closeBtn.style.background = 'none';
-        closeBtn.style.fontSize = '24px';
+        closeBtn.style.fontSize = isMobile ? '20px' : '24px';
         closeBtn.style.cursor = 'pointer';
         closeBtn.style.color = '#502f0e';
+        closeBtn.style.width = '30px';
+        closeBtn.style.height = '30px';
+        closeBtn.style.display = 'flex';
+        closeBtn.style.alignItems = 'center';
+        closeBtn.style.justifyContent = 'center';
         
         closeBtn.addEventListener('click', function() {
             document.body.removeChild(overlay);
         });
         
-        // Ad content
-        content.innerHTML += `
+        // Ad content with responsive layout
+        const adLayout = isMobile ? `
+            <h2 style="color: #502f0e; font-size: 18px; margin: 25px 0 15px 0;">Special Promotion!</h2>
+            <div style="display: block; margin: 15px 0;">
+                <img src="images/latte.webp" alt="Coffee Special" style="width: 100px; height: auto; margin-bottom: 15px;">
+                <div>
+                    <h3 style="color: #70461e; margin: 10px 0; font-size: 16px;">Buy One Get One Free</h3>
+                    <p style="font-size: 14px; margin: 10px 0;">Visit our cafe this weekend and enjoy our special BOGO offer on all specialty coffees!</p>
+                    <p style="font-weight: bold; font-size: 12px; margin: 5px 0;">*Valid Saturday only.</p>
+                </div>
+            </div>
+            <button style="background-color: #70461e; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 14px;">Get Coupon Code</button>
+            <div style="margin-top: 15px; font-size: 11px; color: #999;">
+                This ad will close automatically in <span id="countdown">10</span> seconds
+            </div>
+        ` : `
             <h2 style="color: #502f0e;">Special Promotion!</h2>
             <div style="display: flex; align-items: center; justify-content: center; margin: 20px 0;">
                 <img src="images/latte.webp" alt="Coffee Special" style="width: 150px; margin-right: 20px;">
@@ -218,6 +269,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 This ad will close automatically in <span id="countdown">10</span> seconds
             </div>
         `;
+        
+        content.innerHTML = adLayout;
         
         content.appendChild(closeBtn);
         overlay.appendChild(content);
